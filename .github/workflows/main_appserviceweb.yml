@@ -12,6 +12,7 @@ runs-on: ubuntu-latest
 permissions:
 contents: read
 
+
 steps:
   - uses: actions/checkout@v4
 
@@ -31,12 +32,14 @@ steps:
       name: node-app
       path: backend
 
+
 deploy:
 runs-on: ubuntu-latest
 needs: build
 permissions:
 id-token: write
 contents: read
+
 
 steps:
   - name: Download artifact from build job
@@ -57,3 +60,4 @@ steps:
       app-name: appserviceweb
       slot-name: Production
       package: .
+
