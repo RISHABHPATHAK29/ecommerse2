@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Add Product</title>
+<style>
+
+body{
+font-family: Arial;
+background:#f4f4f4;
+display:flex;
+justify-content:center;
+margin-top:80px;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+width:400px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+}
+
+button{
+background:#2e6df6;
+color:white;
+border:none;
+padding:10px;
+cursor:pointer;
+width:100%;
+}
+
+img{
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Add Product</h2>
+
+<form id="productForm" enctype="multipart/form-data">
+
+<input id="name" name="name" placeholder="Product Name" required>
+
+<input id="price" name="price" type="number" placeholder="Price" required>
+
+<input id="image" name="image" type="file" required>
+
+<img id="previewImg" width="120" style="display:none">
+
+<button type="submit">Upload Product</button>
+
+</form>
+
+<p id="successMsg"></p>
+
+</div>
+
+
+<script>
+const form = document.getElementById("productForm")
+
+form.addEventListener("submit", async function(e){
+
+e.preventDefault()
+
+const name = document.getElementById("name").value
+const price = document.getElementById("price").value
+const image = document.getElementById("image").files[0]
+
+const formData = new FormData()
+
+formData.append("name", name)
+formData.append("price", price)
+formData.append("image", image)
+
+try{
+
+const response = await fetch("http://localhost:5000/api/products",{
+method:"POST",
+body:formData
+})
+
+const data = await response.json()
+
+console.log(data)
+
+alert("Product uploaded successfully")
+
+window.location.href="shop.html"
+
+}catch(error){
+
+console.error(error)
+alert("Upload failed")
+
+}
+
+})
+</script>
+
+</body>
+</html>
