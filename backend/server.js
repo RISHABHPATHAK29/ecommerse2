@@ -1,22 +1,10 @@
-require("dotenv").config()
-
 const express = require("express")
-const cors = require("cors")
-const path = require("path")
+const mongoose = require("mongoose")
 
 const app = express()
 
-app.use(cors())
 app.use(express.json())
-
-// Serve frontend
-app.use(express.static(path.join(__dirname, "../e-commerce-project-master")))
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../e-commerce-project-master/index.html"))
-})
-
-require("./db/mongo")
+app.use(express.urlencoded({extended:true}))
 
 const productRoutes = require("./routes/products")
 const orderRoutes = require("./routes/orders")
@@ -24,8 +12,28 @@ const orderRoutes = require("./routes/orders")
 app.use("/api/products", productRoutes)
 app.use("/api/orders", orderRoutes)
 
-const PORT = process.env.PORT || 8080
+async function startServer() {
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+  try {
+
+    await mongoose.connect(process.env.MONGO_URL, {
+      serverSelectionTimeoutMS: 30000
+    })
+
+    console.log("MongoDB connected")
+
+    const PORT = process.env.PORT || 5000
+
+    app.listen(PORT, () => {
+      console.log("Server running on port", PORT)
+    })
+
+  } catch (err) {
+
+    console.error("MongoDB connection error:", err)
+
+  }
+
+}
+
+startServer()
