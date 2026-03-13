@@ -23,9 +23,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: '24'
 
-      - name: Install backend dependencies
+      - name: Install dependencies
         run: |
           cd backend
           npm install
@@ -50,7 +50,7 @@ jobs:
         with:
           name: node-app
 
-      - name: Azure Login
+      - name: Azure login
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4B15BFAC2C7E4FA7AD7E026F9C4B458D }}
