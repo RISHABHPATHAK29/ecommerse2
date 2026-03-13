@@ -26,8 +26,6 @@ await pool.query(
 
 )
 
-await queueClient.deleteMessage(msg.messageId,msg.popReceipt)
-
 console.log("Order saved to PostgreSQL")
 
 }
