@@ -1,5 +1,8 @@
 name: Build and deploy Node.js app to Azure Web App - appserviceweb
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches:
@@ -9,9 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     permissions:
       contents: read
@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: 24
 
-      - name: Install dependencies
+      - name: Install backend dependencies
         run: |
           cd backend
           npm install
@@ -40,9 +40,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
     permissions:
       id-token: write
       contents: read
@@ -53,7 +50,7 @@ jobs:
         with:
           name: node-app
 
-      - name: Azure login
+      - name: Azure Login
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4B15BFAC2C7E4FA7AD7E026F9C4B458D }}
