@@ -192,7 +192,7 @@ document.getElementById("cart-count").innerText = cart.length
 
 async function loadProducts(){
 
-const response = await fetch("http://localhost:5000/api/products")
+const response = await fetch("/api/products")
 
 const products = await response.json()
 
@@ -252,7 +252,7 @@ return
 
 for(const id of cart){
 
-await fetch("http://localhost:5000/api/orders",{
+await fetch("/api/orders",{
 
 method:"POST",
 
