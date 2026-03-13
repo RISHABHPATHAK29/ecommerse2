@@ -1,10 +1,14 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const path = require("path")
 
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+
+/* SERVE FRONTEND FILES */
+app.use(express.static(path.join(__dirname, "../e-commerce-project-master")))
 
 const productRoutes = require("./routes/products")
 const orderRoutes = require("./routes/orders")
